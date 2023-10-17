@@ -12,10 +12,12 @@
     "@headlessui/react": "^1.7.17",
     "@types/jsonwebtoken": "^9.0.3",
     "cloudinary": "^1.41.0",
+    "encoding": "^0.1.13",
     "graphql-request": "^6.1.0",
     "jsonwebtoken": "^9.0.2",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
+    "node-fetch": "^3.3.2",
     "react": "^18",
     "react-dom": "^18"
   },

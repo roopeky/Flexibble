@@ -15,22 +15,22 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!
         })
     ],
+
     jwt: {
-        decode: ({ secret, token}) => {
-            const decodedToken = jsonwebtoken.verify(token!, secret) as JWT; 
-            return decodedToken;
-        },
         encode: async ({ secret, token}) => {
             const encodedToken = jsonwebtoken.sign({
                 ...token,
                 iss: "https://grafbase.com",
                 iat: Date.now() / 1000,
                 exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
-            }, secret, {
-                algorithm: "HS512"
-                },
-            );
+            }, secret);
+
             return encodedToken;
+        },
+        decode: ({ secret, token}) => {
+            const decodedToken = jsonwebtoken.verify(token!, secret) as JWT; 
+
+            return decodedToken;
         },
     },
      
@@ -38,17 +38,19 @@ export const authOptions: NextAuthOptions = {
         colorScheme: "light",
         logo: "/logo.png",
     },
+
     callbacks: {
         async session({ session }) {
-            const email = session.user?.email as string;
+            const email = session?.user?.email as string;
 
             try {
-                const data = await getUser(email) as { user: UserProfile };
+                const data = await getUser(email) as { user?: UserProfile };
+
                 const newSession = {
                     ...session,
                     user: {
                         ...session.user,
-                        ...data.user
+                        ...data?.user
                     }
                 }
 
@@ -58,6 +60,7 @@ export const authOptions: NextAuthOptions = {
                 return session;
             }
         },
+
         async signIn({ user }: { user: User | AdapterUser }) {
             try {
                     const userExists = await getUser(user?.email as string) as { user?: UserProfile};

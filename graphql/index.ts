@@ -1,6 +1,6 @@
 export const getUserQuery = `
     query GetUser($email: String!) {
-        user(buy: { email: $email }) {
+        user(by: { email: $email }) {
             id
             name
             email
@@ -8,19 +8,22 @@ export const getUserQuery = `
             description
             githubUrl
             linkedinUrl 
+        }
     }
 `
 
 export const createUserMutation = `
     mutation CreateUser($input: UserCreateInput!) {
         userCreate(input: $input) {
-            id
-            name
-            email
-            avatarUrl
-            description
-            githubUrl
-            linkedinUrl
+            user {
+                id
+                name
+                email
+                avatarUrl
+                description
+                githubUrl
+                linkedinUrl
+            }
         }
     }
 `
