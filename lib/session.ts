@@ -8,10 +8,11 @@ import { JWT } from "next-auth/jwt";
 export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        }),
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+        })
     ],
+    /*
     jwt: {
         encode: ({ secret, token}) => {
 
@@ -20,16 +21,25 @@ export const authOptions: NextAuthOptions = {
             
         },
     },
+    */
     theme: {
         colorScheme: "auto",
         logo: "/logo.png",
     },
     callbacks: {
-        async session({ session}) {
-
+        async session({ session }) {
+            return session;
         },
-        async signIn({ user }) {
+        async signIn({ user }: { user: User | AdapterUser }) {
+            try {
+                    // get the user if they exists
+                    // if they don't exist, create them
 
-        }
+                return true;
+            } catch (error: any) {
+                console.log(error);
+                return false;
+            }
+        }   
     }
 }
