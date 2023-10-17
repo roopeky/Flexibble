@@ -4,10 +4,8 @@ import { AdapterUser } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import jsonwebtoken from "jsonwebtoken";
 import { JWT } from "next-auth/jwt";
-import { get } from "http";
 import { SessionInterface, UserProfile } from "@/common.types";
 import { getUser } from "@/lib/actions";
-import { create } from "domain";
 import { createUser } from "@/lib/actions";
 
 export const authOptions: NextAuthOptions = {
@@ -35,7 +33,7 @@ export const authOptions: NextAuthOptions = {
             return encodedToken;
         },
     },
-    }, 
+     
     theme: {
         colorScheme: "light",
         logo: "/logo.png",
