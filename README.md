@@ -2,6 +2,10 @@
 
 This project is initialized using create-next-app, providing a solid foundation for building modern web applications.
 
+## Prerequisites
+
+Node.Js 18.0 or newer.
+
 ## Getting Started
 
 To get started with development, follow these simple steps:
