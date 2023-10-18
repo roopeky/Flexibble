@@ -7,34 +7,12 @@ import FormField from "./FormField";
 import { categoryFilters } from "@/constants";
 import CustomMenu from "./CustomMenu";
 import Button from "./Button";
+import { create } from "domain";
+import { createNewProject, fetchToken } from "@/lib/actions";
 
 type Props = {
   type: string;
   session: SessionInterface;
-};
-
-const handleFormSubmit = (e: React.FormEvent) => {};
-
-const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-  e.preventDefault();
-  const file = e.target.files?.[0];
-
-  if (!file) return;
-
-  if (!file.type.includes("image")) {
-    return alert("Please upload an image file");
-  }
-
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onloadend = () => {
-    const result = reader.result as string;
-    handleStateChange("image", result);
-  };
-};
-
-const handleStateChange = (fieldname: string, value: string) => {
-  setForm((prevState) => ({ ...prevState, [fieldname]: value }));
 };
 
 const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,6 +26,41 @@ const [form, setForm] = useState({
 });
 
 const ProjectForm = ({ type, session }: Props) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const { token } = await fetchToken();
+
+    try {
+      if (type === "create") {
+        await createNewProject(form, session?.user?.id, token);
+      }
+    } catch (error) {}
+  };
+
+  const handleStateChange = (fieldname: string, value: string) => {
+    setForm((prevState) => ({ ...prevState, [fieldname]: value }));
+  };
+
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    if (!file.type.includes("image")) {
+      return alert("Please upload an image file");
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const result = reader.result as string;
+      handleStateChange("image", result);
+    };
+  };
+
   return (
     <form onSubmit={handleFormSubmit} className="flexStart form">
       <div className="flexStart form_image-container">

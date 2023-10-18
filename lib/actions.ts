@@ -35,6 +35,16 @@ export const createUser = (name: string, email: string, avatarUrl: string) => {
     return makeGraphQLRequest(createUserMutation, variables);
 }
 
+export const fetchToken = async () => {
+    try {
+        const response = await fetch(`${serverUrl}/api/token`);
+        return response.json();
+    } catch (error) {
+        console.error("An error occurred during token fetch:", error);
+        throw error;
+    }
+}
+
 export const uploadImage = async (imagePath: string) => {
     try {
         const response = await fetch(`${serverUrl}/api/upload`, {
