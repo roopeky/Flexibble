@@ -7,7 +7,6 @@ import FormField from "./FormField";
 import { categoryFilters } from "@/constants";
 import CustomMenu from "./CustomMenu";
 import Button from "./Button";
-import { create } from "domain";
 import { createNewProject, fetchToken } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 
@@ -96,7 +95,7 @@ const ProjectForm = ({ type, session }: Props) => {
       <FormField
         title="Description"
         state={form.description}
-        placeholder="Showcase and discover remarkable developer projects."
+        placeholder="Enter a description of the project"
         setState={(value) => handleStateChange("description", value)}
       />
 
@@ -104,7 +103,7 @@ const ProjectForm = ({ type, session }: Props) => {
         type="url"
         title="Website Url"
         state={form.liveSiteUrl}
-        placeholder="url"
+        placeholder="Enter a website URL"
         setState={(value) => handleStateChange("liveSiteUrl", value)}
       />
 
@@ -112,7 +111,7 @@ const ProjectForm = ({ type, session }: Props) => {
         type="url"
         title="Github Url"
         state={form.githubUrl}
-        placeholder="github.com/roopeky"
+        placeholder="Enter a GitHub Repository URL"
         setState={(value) => handleStateChange("githubUrl", value)}
       />
 
