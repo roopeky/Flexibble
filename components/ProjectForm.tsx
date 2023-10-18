@@ -104,7 +104,11 @@ const ProjectForm = ({ type, session }: Props) => {
 
       <div className="flexStart w-full">
         <Button
-          title="Create"
+          title={
+            isSubmitting
+              ? `${type === "create" ? "Creating" : "Editing"}`
+              : `${type === "create" ? "Create" : "Edit"}`
+          }
           type="submit"
           leftIcon={isSubmitting ? "" : "/plus.svg"}
           isSubmitting={isSubmitting}
