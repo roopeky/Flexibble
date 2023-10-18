@@ -44,11 +44,38 @@ const ProjectForm = ({ type, session }: Props) => {
       </div>
 
       <FormField
+        title="Description"
+        state={form.description}
+        placeholder="Showcase and discover remarkable developer projects."
+        setState={(value) => handleStateChange("description", value)}
+      />
+
+      <FormField
+        type="url"
+        title="Website Url"
+        state={form.liveSiteUrl}
+        placeholder="url"
+        setState={(value) => handleStateChange("liveSiteUrl", value)}
+      />
+
+      <FormField
+        type="url"
+        title="Github Url"
+        state={form.githubUrl}
+        placeholder="github.com/roopeky"
+        setState={(value) => handleStateChange("githubUrl", value)}
+      />
+
+      <FormField
         title="Project Title"
         state={form.title}
         placeholder="Flexibble"
         setState={(value) => handleStateChange("title", value)}
       />
+
+      <div className="flexStart w-full">
+        <button>Create</button>
+      </div>
     </form>
   );
 };
