@@ -1,6 +1,7 @@
-import { getUserQuery } from "@/graphql";
+import { createProjectMutation, getUserQuery } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 import { createUserMutation } from "../graphql";
+import { ProjectForm } from "@/common.types";
 
 const isProduction = process.env.NODE_ENV === "production";
 const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || "" : "http://127.0.0.1:4000/graphql" ;
@@ -33,3 +34,39 @@ export const createUser = (name: string, email: string, avatarUrl: string) => {
 
     return makeGraphQLRequest(createUserMutation, variables);
 }
+
+export const uploadImage = async (imagePath: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/upload`, {
+            method: "POST",
+            body: JSON.stringify({ path: imagePath })
+        });
+        
+        return response.json();
+    } catch (error) {
+        // Handle the error here or rethrow it
+        console.error("An error occurred during image upload:", error);
+        throw error; // Rethrow the error if you want to handle it further up the call stack
+    }
+};
+
+
+export const createNewProject = async (form: ProjectForm, creatorId: string, token: string) => {
+    const imageUrl = await uploadImage(form.image);
+
+    if (imageUrl.url) {
+        client.setHeader("Authorization", `Bearer ${token}`);
+
+        const variables = {
+            input: {
+                ...form,
+                image: imageUrl.url,
+                createdBy: {
+                    link: creatorId
+                }
+            }
+        };
+
+        return makeGraphQLRequest(createProjectMutation, variables);
+    }
+};
