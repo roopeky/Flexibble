@@ -16,17 +16,17 @@ type Props = {
   session: SessionInterface;
 };
 
-const [isSubmitting, setIsSubmitting] = useState(false);
-const [form, setForm] = useState({
-  title: "",
-  description: "",
-  image: "",
-  liveSiteUrl: "",
-  githubUrl: "",
-  category: "",
-});
-
 const ProjectForm = ({ type, session }: Props) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    image: "",
+    liveSiteUrl: "",
+    githubUrl: "",
+    category: "",
+  });
+
   const router = useRouter();
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
