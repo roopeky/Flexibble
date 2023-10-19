@@ -36,7 +36,15 @@ const Home = async () => {
 
       <section className="projects-grid">
         {projectsToDisplay.map(({ node }: { node: ProjectInterface }) => (
-          <ProjectCard key={node?.id} />
+          <ProjectCard
+            key={node?.id}
+            id={node?.id}
+            image={node?.image}
+            title={node?.title}
+            name={node?.createdBy?.name}
+            avatarUrl={node?.createdBy?.avatarUrl}
+            userId={node?.createdBy?.id}
+          />
         ))}
       </section>
 
