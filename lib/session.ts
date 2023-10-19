@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
                 ...token,
                 iss: "https://grafbase.com",
                 iat: Date.now() / 1000,
-                exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
+                exp: (Math.floor(Date.now() / 1000) + 60 * 60)
             }, secret);
 
             return encodedToken;

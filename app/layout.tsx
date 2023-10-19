@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Flexibble",
-  description: "Hemo iso appi",
+  description: "big project",
 };
 
 export default function RootLayout({

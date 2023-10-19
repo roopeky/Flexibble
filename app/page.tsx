@@ -36,7 +36,7 @@ const Home = async () => {
 
       <section className="projects-grid">
         {projectsToDisplay.map(({ node }: { node: ProjectInterface }) => (
-          <ProjectCard />
+          <ProjectCard key={node?.id} />
         ))}
       </section>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { SessionInterface } from "@/common.types";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Image from "next/image";
 import FormField from "./FormField";
 import { categoryFilters } from "@/constants";
@@ -16,6 +16,7 @@ type Props = {
 };
 
 const ProjectForm = ({ type, session }: Props) => {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     title: "",
@@ -25,26 +26,6 @@ const ProjectForm = ({ type, session }: Props) => {
     githubUrl: "",
     category: "",
   });
-
-  const router = useRouter();
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const { token } = await fetchToken();
-
-    try {
-      if (type === "create") {
-        await createNewProject(form, session?.user?.id, token);
-
-        router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const handleStateChange = (fieldname: string, value: string) => {
     setForm((prevState) => ({ ...prevState, [fieldname]: value }));
@@ -66,6 +47,30 @@ const ProjectForm = ({ type, session }: Props) => {
       const result = reader.result as string;
       handleStateChange("image", result);
     };
+  };
+
+  const handleFormSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const { token } = await fetchToken();
+
+    try {
+      if (type === "create") {
+        await createNewProject(form, session?.user?.id, token);
+
+        router.push("/");
+      }
+    } catch (error) {
+      alert(
+        `Failed to ${
+          type === "create" ? "create" : "edit"
+        } a project. Try again!`
+      );
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -91,6 +96,12 @@ const ProjectForm = ({ type, session }: Props) => {
           />
         )}
       </div>
+      <FormField
+        title="Title"
+        state={form.title}
+        placeholder="Project name"
+        setState={(value) => handleStateChange("title", value)}
+      />
 
       <FormField
         title="Description"
