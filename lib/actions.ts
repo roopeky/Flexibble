@@ -82,6 +82,7 @@ export const createNewProject = async (form: ProjectForm, creatorId: string, tok
         };
 
         return makeGraphQLRequest(createProjectMutation, variables, headers);
+        // works
     }
 };
 
