@@ -9,12 +9,12 @@ const apiKey = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_KEY || "" : "
 const serverUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_SERVER_URL || "" : "http://localhost:3000";
 
 const clientOptions = {
-    headers: {
-      'x-api-key': apiKey,
-    },
-  };
-  
-  const client = new GraphQLClient(apiUrl, clientOptions);
+  headers: {
+    'x-api-key': apiKey,
+  },
+};
+
+const client = new GraphQLClient(apiUrl, clientOptions);
 
 export const fetchToken = async () => {
     try {
@@ -26,7 +26,7 @@ export const fetchToken = async () => {
     }
 }
 
-const makeGraphQLRequest = async (query: string, variables = {}, headers = {}) => {
+const makeGraphQLRequest = async (query: string, variables = {}, headers ={}) => {
     try {
       return await client.request(query, variables, headers);
     } catch (error) {
@@ -65,21 +65,21 @@ export const uploadImage = async (imagePath: string) => {
 };
 
 export const createNewProject = async (form: ProjectForm, creatorId: string, token: string) => {
-    const imageUrl = await uploadImage(form.image);
-    if (imageUrl.url) {      
+  const imageUrl = await uploadImage(form.image);
+  if (imageUrl.url) {      
 
-      const headers = {
-        Authorization: `Bearer ${token}`
-      };
-      const variables = {
-        input: {
-          ...form,
-          image: imageUrl.url,
-          createdBy: {
-            link: creatorId
-          }
-            }
-        };
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+    const variables = {
+      input: {
+        ...form,
+        image: imageUrl.url,
+        createdBy: {
+          link: creatorId
+        }
+      }
+    };
 
         return makeGraphQLRequest(createProjectMutation, variables, headers);
     }

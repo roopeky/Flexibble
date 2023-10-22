@@ -15,8 +15,17 @@ type ProjectSearch = {
   };
 };
 
-const Home = async () => {
-  const data = (await fetchAllProjects()) as ProjectSearch;
+type SearchParams = {
+  category?: string;
+  endcursor?: string;
+};
+
+type Props = {
+  searchParams: SearchParams;
+};
+
+const Home = async ({ searchParams: { category, endcursor } }: Props) => {
+  const data = (await fetchAllProjects(category, endcursor)) as ProjectSearch;
 
   const projectsToDisplay = data?.projectSearch?.edges || [];
 
@@ -47,9 +56,7 @@ const Home = async () => {
             userId={node?.createdBy?.id}
           />
         ))}
-        C
       </section>
-
       <s>LoadMore</s>
     </section>
   );
