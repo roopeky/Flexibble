@@ -1,4 +1,5 @@
 import { ProjectInterface } from "@/common.types";
+import Categories from "@/components/Categories";
 import ProjectCard from "@/components/ProjectCard";
 import { fetchAllProjects } from "@/lib/actions";
 
@@ -32,7 +33,7 @@ const Home = async () => {
 
   return (
     <section className="flex-start flex col paddings mb-16">
-      <h1>Categories</h1>
+      <Categories />
 
       <section className="projects-grid">
         {projectsToDisplay.map(({ node }: { node: ProjectInterface }) => (
@@ -46,9 +47,10 @@ const Home = async () => {
             userId={node?.createdBy?.id}
           />
         ))}
+        C
       </section>
 
-      <h1>LoadMore</h1>
+      <s>LoadMore</s>
     </section>
   );
 };
