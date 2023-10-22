@@ -43,6 +43,18 @@ const ProjectCard = ({ id, image, title, name, avatarUrl, userId }: Props) => {
             />
           </div>
         </Link>
+
+        <div className="flexCenter gap-3">
+          <div className="flexCenter gap-2">
+            <Image src="/hearth.svg" width={13} height={12} alt="heart icon" />
+            <p className="text-sm">0</p>
+          </div>
+
+          <div className="flexCenter gap-2">
+            <Image src="/eye.svg" width={13} height={12} alt="eye icon" />
+            <p className="text-sm">0</p>
+          </div>
+        </div>
       </div>
     </div>
   );
