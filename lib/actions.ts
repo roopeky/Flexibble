@@ -1,3 +1,4 @@
+import { deleteProjectMutation, getProjectsOfUserQuery } from './../graphql/index';
 import { createProjectMutation, getUserQuery, projectsQuery, createUserMutation, getAllProjectsQuery, getProjectByIdQuery } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 import { ProjectForm } from "@/common.types";
@@ -58,9 +59,8 @@ export const uploadImage = async (imagePath: string) => {
         
         return response.json();
     } catch (error) {
-        // Handle the error here or rethrow it
         console.error("An error occurred during image upload:", error);
-        throw error; // Rethrow the error if you want to handle it further up the call stack
+        throw error;
     }
 };
 
@@ -97,5 +97,15 @@ export const fetchAllProjects = (category?: string, endcursor?: string) => {
 export const getProjectDetails = (id: string) => {
   client.setHeader("x-api-key", apiKey);
     return makeGraphQLRequest(getProjectByIdQuery, { id });
+};
+
+export const getUserProjects = (id: string, last?: number) => {
+  client.setHeader("x-api-key", apiKey);
+    return makeGraphQLRequest(getProjectsOfUserQuery, { id, last });
+};
+
+export const deleteProject = (id: string, token: string) => {
+  client.setHeader("Authorization", `Bearer ${token}`);
+    return makeGraphQLRequest(deleteProjectMutation, { id });
 };
   
