@@ -1,5 +1,6 @@
 import { ProjectInterface } from "@/common.types";
 import Categories from "@/components/Categories";
+import LoadMore from "@/components/LoadMore";
 import ProjectCard from "@/components/ProjectCard";
 import { fetchAllProjects } from "@/lib/actions";
 
@@ -31,8 +32,8 @@ const Home = async ({ searchParams: { category, endcursor } }: Props) => {
 
   if (projectsToDisplay.length === 0) {
     return (
-      <section className="flex-start flex col paddings mb-16">
-        Categories
+      <section className="flex-start flex-col paddings mb-16">
+        <Categories />
         <p className="no-result-text text-center">
           No projects found, go create some first!
         </p>
@@ -40,8 +41,10 @@ const Home = async ({ searchParams: { category, endcursor } }: Props) => {
     );
   }
 
+  const pagination = data?.projectSearch?.pageInfo;
+
   return (
-    <section className="flex-start flex col paddings mb-16">
+    <section className="flex-start flex-col paddings mb-16">
       <Categories />
 
       <section className="projects-grid">
@@ -57,7 +60,12 @@ const Home = async ({ searchParams: { category, endcursor } }: Props) => {
           />
         ))}
       </section>
-      <s>LoadMore</s>
+      <LoadMore
+        startCursor={pagination.startCursor}
+        endCursor={pagination.endCursor}
+        hasPreviousPage={pagination.hasPreviousPage}
+        hasNextPage={pagination.hasNextPage}
+      />
     </section>
   );
 };
