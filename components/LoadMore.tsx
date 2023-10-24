@@ -10,8 +10,6 @@ type Props = {
   hasNextPage: boolean;
 };
 
-const handleNavigation = (direction: string) => {};
-
 const LoadMore = ({
   startCursor,
   endCursor,
@@ -20,18 +18,35 @@ const LoadMore = ({
 }: Props) => {
   const router = useRouter();
 
+  const handleNavigation = (direction: string) => {
+    const currentParams = new URLSearchParams(window.location.search);
+
+    if (direction === "next" && hasNextPage) {
+      currentParams.delete("startcursor");
+      currentParams.set("endcursor", endCursor);
+    } else if (direction === "first" && hasPreviousPage) {
+      currentParams.delete("endcursor");
+      currentParams.set("startcursor", startCursor);
+    }
+
+    const newSearchParams = currentParams.toString();
+    const newPathName = `${window.location.pathname}?${newSearchParams}`;
+
+    router.push(newPathName);
+  };
+
   return (
-    <div>
+    <div className="w-full flexCenter gap-5 mt-10">
       {hasPreviousPage && (
         <Button
           title="First page"
           handleClick={() => handleNavigation("first")}
         />
       )}
-      {hasPreviousPage && (
+      {hasNextPage && (
         <Button
-          title="Previous page"
-          handleClick={() => handleNavigation("previous")}
+          title="Next page"
+          handleClick={() => handleNavigation("next")}
         />
       )}
     </div>
