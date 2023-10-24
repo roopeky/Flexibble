@@ -30,7 +30,7 @@ const Button = ({
       ${textColor ? textColor : "text-white"}
       ${
         isSubmitting ? "bg-black/50" : bgColor ? bgColor : "bg-primary-purple"
-      } rounded-x1 text-sm font-mediumn max-md:w-full
+      } rounded-x1 text-sm font-medium max-md:w-full
       `}
       onClick={handleClick}
     >
