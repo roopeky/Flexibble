@@ -1,4 +1,4 @@
-import { deleteProjectMutation, getProjectsOfUserQuery, updateProjectMutation } from './../graphql/index';
+import { deleteProjectMutation, getProjectsOfUserQuery, updateProjectMutation } from '../graphql/index';
 import { createProjectMutation, getUserQuery, projectsQuery, createUserMutation, getAllProjectsQuery, getProjectByIdQuery } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 import { ProjectForm } from "@/common.types";
@@ -8,7 +8,6 @@ const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || "" : "
 const apiKey = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_KEY || "" : "letmein";
 const serverUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_SERVER_URL || "" : "http://localhost:3000";
 
-// oooooooo
 const clientOptions = {
   headers: {
     'x-api-key': apiKey,
